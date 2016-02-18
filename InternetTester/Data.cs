@@ -17,8 +17,27 @@
         private bool hasException = false;
         private string lastException;
         private DateTime exceptionDate;
+        DateTime? lasttime = null;
 
         private readonly List<ExceptionHistory> history = new List<ExceptionHistory>();
+
+        public TimeSpan? TotalDowntime
+        {
+            get
+            {
+                if (this.hasException)
+                {
+                    var now = DateTime.Now;
+                    var dt = now.Subtract(this.exceptionDate);
+                    return dt;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+        }
 
         public void UpdateStatistics(Exception x)
         {
@@ -27,7 +46,22 @@
             {
                 if (x == null)
                 {
-                    this.history.Add(new ExceptionHistory { Exception=this.lastException, Started=this.exceptionDate, Ended=now });
+                    var ended = now;
+
+                    var dt = now.Subtract(this.exceptionDate);
+                    if (dt.TotalSeconds > 3)
+                    {
+                        if (this.lasttime.HasValue) { 
+                            ended = this.lasttime.Value;
+                        }
+                    }
+
+                    this.history.Add(new ExceptionHistory { Exception=this.lastException, Started=this.exceptionDate, Ended=ended });
+                    this.lasttime = null;
+                }
+                else
+                {
+                    this.lasttime = now;
                 }
             }
             else

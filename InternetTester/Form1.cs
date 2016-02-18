@@ -57,7 +57,9 @@ namespace InternetTester
         private void DisplayData()
         {
             var message = this.data.Exception ?? (this.data.Output);
-            var m = string.Format("Last date: {0}\r\n{1}", this.data.Time.ToLongTimeString(), message);
+            var down = this.data.TotalDowntime;
+            var downstr = down.HasValue ? string.Format("Downtime: {0}", down.Value) : string.Empty;
+            var m = string.Format("Last date: {0}\r\n{1}\r\n{2}", this.data.Time.ToLongTimeString(), message, downstr);
             this.dOuput.Text = m;
 
             if (this.data.Exception != null)
