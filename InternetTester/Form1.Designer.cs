@@ -121,6 +121,7 @@
             this.dHistory.Multiline = true;
             this.dHistory.Name = "dHistory";
             this.dHistory.ReadOnly = true;
+            this.dHistory.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.dHistory.Size = new System.Drawing.Size(630, 485);
             this.dHistory.TabIndex = 1;
             // 
