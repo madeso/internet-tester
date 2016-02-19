@@ -28,6 +28,7 @@
                 if (x == null)
                 {
                     this.history.Add(new ExceptionHistory { Exception=this.lastException, Started=this.exceptionDate, Ended=now });
+                    this.hasException = false;
                 }
             }
             else
