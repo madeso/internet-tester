@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.dOuput = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -35,6 +37,7 @@
             this.dLastError = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.dHistory = new System.Windows.Forms.TextBox();
+            this.dNotify = new System.Windows.Forms.NotifyIcon(this.components);
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -118,8 +121,15 @@
             this.dHistory.Multiline = true;
             this.dHistory.Name = "dHistory";
             this.dHistory.ReadOnly = true;
+            this.dHistory.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.dHistory.Size = new System.Drawing.Size(630, 485);
             this.dHistory.TabIndex = 1;
+            // 
+            // dNotify
+            // 
+            this.dNotify.Icon = ((System.Drawing.Icon)(resources.GetObject("dNotify.Icon")));
+            this.dNotify.Text = "Internet Tester";
+            this.dNotify.Visible = true;
             // 
             // Form1
             // 
@@ -149,6 +159,7 @@
         private System.Windows.Forms.TextBox dLastError;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TextBox dHistory;
+        private System.Windows.Forms.NotifyIcon dNotify;
     }
 }
 
