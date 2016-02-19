@@ -72,12 +72,19 @@
             var m = string.Format("Last date: {0}\r\n{1}\r\n{2}", this.data.Time.ToLongTimeString(), message, downstr);
             this.dOuput.Text = m;
 
-            if (this.data.Exception != null)
-            {
-                this.dLastError.Text = m;
-            }
+            var hasInternet = this.data.Exception == null;
+
+            this.dLastError.Text = hasInternet ? string.Empty : m;
+            dNotify.Text = MaxLength(63, hasInternet ? "Internet: OK" : m);
+            this.Icon = dNotify.Icon = hasInternet ? Properties.Resources.main_icon : Properties.Resources.error_icon;
 
             this.dHistory.Text = this.data.ToExceptionString();
+        }
+
+        private static string MaxLength(int length, string str)
+        {
+            if (str.Length < length) return str;
+            else return str.Substring(0, length);
         }
 
         private void UpdateData(object userState)
