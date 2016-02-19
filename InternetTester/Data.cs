@@ -5,20 +5,38 @@
     using System.IO;
     using System.Linq;
 
+    using Newtonsoft.Json;
+
     public class Data
     {
+        [JsonProperty(PropertyName = "output")]
         public string Output;
+
+        [JsonProperty(PropertyName = "exception")]
         public string Exception;
+
+        [JsonProperty(PropertyName = "time")]
         public DateTime Time;
 
+        [JsonProperty(PropertyName = "last_error_description")]
         public string LastError;
+
+        [JsonProperty(PropertyName = "last_error_time")]
         public DateTime LastErrorTime;
 
+        [JsonProperty(PropertyName = "has_exception")]
         private bool hasException = false;
+
+        [JsonProperty(PropertyName = "last_exception")]
         private string lastException;
+
+        [JsonProperty(PropertyName = "exception_date")]
         private DateTime exceptionDate;
+
+        [JsonProperty(PropertyName = "last_time")]
         private DateTime? lasttime = null;
 
+        [JsonProperty(PropertyName = "history")]
         private readonly List<ExceptionHistory> history = new List<ExceptionHistory>();
 
         public TimeSpan? TotalDowntime

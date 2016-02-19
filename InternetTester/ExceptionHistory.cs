@@ -2,12 +2,17 @@
 {
     using System;
 
+    using Newtonsoft.Json;
+
     internal class ExceptionHistory
     {
+        [JsonProperty(PropertyName = "exception")]
         public string Exception { get; set; }
 
+        [JsonProperty(PropertyName = "started")]
         public DateTime Started { get; set; }
 
+        [JsonProperty(PropertyName = "ended")]
         public DateTime Ended { get; set; }
 
         public override string ToString()
