@@ -10,6 +10,26 @@
     public static class Web
     {
         /// <summary>
+        /// The url fix.
+        /// </summary>
+        /// <param name="abadurl">
+        /// The url.
+        /// </param>
+        /// <returns>
+        /// The <see cref="string"/>.
+        /// </returns>
+        public static string AddSlashAtTheEnd(string abadurl)
+        {
+            var badurl = abadurl.Trim();
+            var sep = IsUrl(badurl) ? "/" : "\\";
+            if (badurl.EndsWith(sep))
+            {
+                return badurl;
+            }
+            return badurl + sep;
+        }
+
+        /// <summary>
         /// Downloads and saves a file. 
         /// </summary>
         /// <param name="url">
@@ -41,8 +61,8 @@
 
                     using( var fs = File.Open( target, FileMode.Create ) )
                     {
-                        byte[] buf = new byte[1024]; // changed from 2^13=8192 to 2^10=1024, because the server might choke on large data for certain customers #11729
-                        int count = 0;
+                        var buf = new byte[1024]; // changed from 2^13=8192 to 2^10=1024, because the server might choke on large data for certain customers #11729
+                        var count = 0;
                         long current = 0;
                         do
                         {
@@ -79,26 +99,17 @@
         }
 
         /// <summary>
-        /// The url fix.
+        /// Gets a page as a string 
         /// </summary>
-        /// <param name="abadurl">
-        /// The url.
+        /// <param name="url">
+        /// The page 
         /// </param>
         /// <returns>
-        /// The <see cref="string"/>.
+        /// The page that was returned 
         /// </returns>
-        public static string AddSlashAtTheEnd(string abadurl)
+        public static string FetchString(string url)
         {
-            var badurl = abadurl.Trim();
-            var sep = IsUrl(badurl) ? "/" : "\\";
-            if (badurl.EndsWith(sep))
-            {
-                return badurl;
-            }
-            else
-            {
-                return badurl + sep;
-            }
+            return FetchStringAdvanced(url).Text;
         }
 
         /// <summary>
@@ -207,25 +218,8 @@
                 {
                     return false;
                 }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
-        }
-
-        /// <summary>
-        /// Gets a page as a string 
-        /// </summary>
-        /// <param name="url">
-        /// The page 
-        /// </param>
-        /// <returns>
-        /// The page that was returned 
-        /// </returns>
-        public static string FetchString(string url)
-        {
-            return FetchStringAdvanced(url).Text;
         }
 
         /// <summary>
@@ -264,14 +258,14 @@
         public struct FetchStringResult
         {
             /// <summary>
-            /// The text.
-            /// </summary>
-            public string Text;
-
-            /// <summary>
             /// The error.
             /// </summary>
             public WebException Error;
+
+            /// <summary>
+            /// The text.
+            /// </summary>
+            public string Text;
         }
     }
 }
