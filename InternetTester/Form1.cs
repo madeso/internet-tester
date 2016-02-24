@@ -70,12 +70,13 @@
             var down = this.data.TotalDowntime;
             var downstr = down.HasValue ? string.Format("Downtime: {0}", down.Value) : string.Empty;
             var m = string.Format("Last date: {0}\r\n{1}\r\n{2}", this.data.Time.ToLongTimeString(), message, downstr);
+            var sm = string.Format("Last date: {0}\r\n{1}", this.data.Time.ToLongTimeString(), downstr);
             this.dOuput.Text = m;
 
             var hasInternet = this.data.Exception == null;
 
             this.dLastError.Text = hasInternet ? string.Empty : m;
-            dNotify.Text = MaxLength(63, hasInternet ? "Internet: OK" : m);
+            dNotify.Text = MaxLength(64, hasInternet ? "Internet: OK" : sm);
             this.Icon = dNotify.Icon = hasInternet ? Properties.Resources.main_icon : Properties.Resources.error_icon;
 
             this.dHistory.Text = this.data.ToExceptionString();
@@ -84,7 +85,7 @@
         private static string MaxLength(int length, string str)
         {
             if (str.Length < length) return str;
-            else return str.Substring(0, length);
+            else return str.Substring(0, length-1);
         }
 
         private void UpdateData(object userState)
