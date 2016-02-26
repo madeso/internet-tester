@@ -94,7 +94,10 @@
                         }
                     }
 
-                    this.history.Add(new ExceptionHistory { Exception=this.lastException, Started=this.exceptionDate, Ended=ended });
+                    var h = new ExceptionHistory { Exception = this.lastException, Started = this.exceptionDate, Ended = ended };
+                    if (h.Span.TotalSeconds >= 2) { 
+                        this.history.Add(h);
+                    }
                     this.hasException = false;
                     this.lasttime = null;
                 }
