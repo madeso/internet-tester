@@ -25,7 +25,8 @@
 
         public override string ToString()
         {
-            return string.Format("{1} {2}: {0}: ", this.Exception, this.Started, this.Span);
+            var s = this.Span;
+            return string.Format("{1} {3:hh\\:mm\\:ss} and {2} days: {0}", this.Exception, this.Started, (int)(s.TotalDays), s);
         }
     }
 }
