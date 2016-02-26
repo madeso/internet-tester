@@ -133,23 +133,23 @@
             try
             {
                 response = request.GetResponse();
+
+                if (response != null)
+                {
+                    var dataStream = response.GetResponseStream();
+                    if (dataStream != null)
+                    {
+                        var reader = new StreamReader(dataStream);
+                        responseFromServer = reader.ReadToEnd();
+                        reader.Close();
+                        response.Close();
+                    }
+                }
             }
-            catch( WebException web )
+            catch (WebException web)
             {
                 exp = web;
                 response = web.Response;
-            }
-
-            if (response != null)
-            {
-                var dataStream = response.GetResponseStream();
-                if (dataStream != null)
-                {
-                    var reader = new StreamReader(dataStream);
-                    responseFromServer = reader.ReadToEnd();
-                    reader.Close();
-                    response.Close();
-                }
             }
 
             return new FetchStringResult { Text = responseFromServer, Error = exp };
