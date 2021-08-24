@@ -15,13 +15,7 @@
         [JsonProperty(PropertyName = "started")]
         public DateTime Started { get; set; }
 
-        public TimeSpan Span
-        {
-            get
-            {
-                return this.Ended.Subtract(this.Started);
-            }
-        }
+        public TimeSpan Span => this.Ended.Subtract(this.Started);
 
         public override string ToString()
         {

@@ -44,8 +44,7 @@ namespace InternetTester
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                 "madeso",
                 "InternetTester");
-            if (string.IsNullOrEmpty(file)) return dir;
-            return string.Join(sep, dir, file);
+            return string.IsNullOrEmpty(file) ? dir : string.Join(sep, dir, file);
         }
 
         public static void Save<TData>(TData data, string file)

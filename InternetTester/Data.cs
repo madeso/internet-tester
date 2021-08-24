@@ -25,39 +25,31 @@
         public DateTime Time;
 
         [JsonProperty(PropertyName = "history")]
-        private readonly List<ExceptionHistory> history = new List<ExceptionHistory>();
+        private readonly List<ExceptionHistory> _history = new List<ExceptionHistory>();
 
         [JsonProperty(PropertyName = "exception_date")]
-        private DateTime exceptionDate;
+        private DateTime _exceptionDate;
 
         [JsonProperty(PropertyName = "has_exception")]
-        private bool hasException;
+        private bool _hasException;
 
         [JsonProperty(PropertyName = "last_exception")]
-        private string lastException;
+        private string _lastException;
 
         [JsonProperty(PropertyName = "last_time")]
-        private DateTime? lasttime;
+        private DateTime? _lastTime;
 
-        public static string DefaultFilePath
-        {
-            get
-            {
-                return Json.GetPathTo("app_data.json");
-            }
-        }
+        public static string DefaultFilePath => Json.GetPathTo("app_data.json");
 
         public TimeSpan? TotalDowntime
         {
             get
             {
-                if (this.hasException)
-                {
-                    var now = DateTime.Now;
-                    var dt = now.Subtract(this.exceptionDate);
-                    return dt;
-                }
-                return null;
+	            if (!this._hasException) return null;
+
+	            var now = DateTime.Now;
+                var dt = now.Subtract(this._exceptionDate);
+                return dt;
             }
         }
 
@@ -74,45 +66,45 @@
 
         public string ToExceptionString()
         {
-            return string.Join("\r\n", this.history.Select(x => x.ToString()));
+            return string.Join("\r\n", this._history.Select(x => x.ToString()));
         }
 
         public void UpdateStatistics(Exception x)
         {
             var now = DateTime.Now;
-            if (this.hasException)
+            if (this._hasException)
             {
                 if (x == null)
                 {
                     var ended = now;
 
-                    var dt = now.Subtract(this.exceptionDate);
+                    var dt = now.Subtract(this._exceptionDate);
                     if (dt.TotalSeconds > 3)
                     {
-                        if (this.lasttime.HasValue) { 
-                            ended = this.lasttime.Value;
+                        if (this._lastTime.HasValue) { 
+                            ended = this._lastTime.Value;
                         }
                     }
 
-                    var h = new ExceptionHistory { Exception = this.lastException, Started = this.exceptionDate, Ended = ended };
+                    var h = new ExceptionHistory { Exception = this._lastException, Started = this._exceptionDate, Ended = ended };
                     if (h.Span.TotalSeconds >= 2) { 
-                        this.history.Add(h);
+                        this._history.Add(h);
                     }
-                    this.hasException = false;
-                    this.lasttime = null;
+                    this._hasException = false;
+                    this._lastTime = null;
                 }
                 else
                 {
-                    this.lasttime = now;
+                    this._lastTime = now;
                 }
             }
             else
             {
                 if (x != null)
                 {
-                    this.hasException = true;
-                    this.lastException = x.Message;
-                    this.exceptionDate = now;
+                    this._hasException = true;
+                    this._lastException = x.Message;
+                    this._exceptionDate = now;
                 }
             }
         }
