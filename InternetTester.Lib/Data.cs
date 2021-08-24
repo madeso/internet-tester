@@ -38,7 +38,7 @@ namespace InternetTester.Lib
         [JsonProperty(PropertyName = "last_time")]
         private DateTime? _lastTime;
 
-        public static string DefaultFilePath => Json.GetPathTo("app_data.json");
+        public static string DefaultFilePath => Json.GetPathTo("history.json");
 
         public TimeSpan? TotalDowntime
         {
