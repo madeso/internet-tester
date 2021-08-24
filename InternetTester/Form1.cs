@@ -1,4 +1,6 @@
-﻿namespace InternetTester
+﻿using InternetTester.Lib;
+
+namespace InternetTester
 {
     using System;
     using System.ComponentModel;
@@ -7,39 +9,17 @@
 
     public partial class Form1 : Form
     {
-        readonly Data data = CreateData();
+        readonly Data _data = Data.CreateData();
 
-        private readonly BackgroundWorker bw;
+        private readonly BackgroundWorker _worker;
 
         public Form1()
         {
             this.InitializeComponent();
-            this.bw = new BackgroundWorker { WorkerSupportsCancellation = true, WorkerReportsProgress = true };
-            this.bw.ProgressChanged += (sender, args) => this.UpdateData(args.UserState);
-            this.bw.DoWork += (sender, args) => TestInternetThread(args, this.bw);
-            this.bw.RunWorkerAsync();
-        }
-
-        private static Data CreateData()
-        {
-            return Data.Restore() ?? new Data();
-        }
-
-        private static string GetTitle(string um)
-        {
-            if (um == null) return string.Empty;
-
-            var t = "<title>";
-            var s = um.IndexOf(t, StringComparison.Ordinal);
-            var e = um.IndexOf("</title>", s, StringComparison.Ordinal);
-
-            if (s != -1 && e != -1)
-            {
-                s = s + t.Length;
-                return um.Substring(s, e-s);
-            }
-
-            return null;
+            this._worker = new BackgroundWorker { WorkerSupportsCancellation = true, WorkerReportsProgress = true };
+            this._worker.ProgressChanged += (sender, args) => this.UpdateData(args.UserState);
+            this._worker.DoWork += (sender, args) => TestInternetThread(args, this._worker);
+            this._worker.RunWorkerAsync();
         }
 
         private static Exception TestInternet(out string res)
@@ -66,45 +46,28 @@
 
         private void DisplayData()
         {
-            var message = this.data.Exception ?? this.data.Output;
-            var down = this.data.TotalDowntime;
+            var message = this._data.Exception ?? this._data.Output;
+            var down = this._data.TotalDowntime;
             var downstr = down.HasValue ? string.Format("Downtime: {0}", down.Value) : string.Empty;
-            var m = string.Format("Last date: {0}\r\n{1}\r\n{2}", this.data.Time.ToLongTimeString(), message, downstr);
-            var sm = string.Format("Last date: {0}\r\n{1}", this.data.Time.ToLongTimeString(), downstr);
+            var m = string.Format("Last date: {0}\r\n{1}\r\n{2}", this._data.Time.ToLongTimeString(), message, downstr);
+            var sm = string.Format("Last date: {0}\r\n{1}", this._data.Time.ToLongTimeString(), downstr);
             this.dOuput.Text = m;
 
-            var hasInternet = this.data.Exception == null;
+            var hasInternet = this._data.Exception == null;
 
             this.dLastError.Text = hasInternet ? string.Empty : m;
-            dNotify.Text = MaxLength(64, hasInternet ? "Internet: OK" : sm);
+            dNotify.Text = Lib.Util.MaxLength(64, hasInternet ? "Internet: OK" : sm);
             this.Icon = dNotify.Icon = hasInternet ? Properties.Resources.main_icon : Properties.Resources.error_icon;
 
-            this.dHistory.Text = this.data.ToExceptionString();
-        }
-
-        private static string MaxLength(int length, string str)
-        {
-            if (str.Length < length) return str;
-            else return str.Substring(0, length-1);
+            this.dHistory.Text = this._data.ToExceptionString();
         }
 
         private void UpdateData(object userState)
         {
-            var x = userState as Exception;
-            var um = userState as string;
+            var exception = userState as Exception;
+            var userMessage = userState as string;
 
-            this.data.Time = DateTime.Now;
-            this.data.Output = GetTitle(um) ?? um;
-            this.data.Exception = x != null ? x.Message : null;
-
-            if (this.data.Exception != null)
-            {
-                this.data.LastErrorTime = DateTime.Now;
-                this.data.LastError = this.data.Exception;
-            }
-
-            this.data.Backup();
-            this.data.UpdateStatistics(x);
+            this._data.Update(userMessage, exception);
 
             this.DisplayData();
         }

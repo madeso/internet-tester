@@ -1,11 +1,11 @@
-﻿namespace InternetTester
-{
-    using System;
-    using System.IO;
-    using System.Net;
-    using System.Net.Cache;
+﻿using System;
+using System.IO;
+using System.Net;
+using System.Net.Cache;
 
-    /// <summary> Utility functions for web handling. </summary>
+namespace InternetTester.Lib
+{
+	/// <summary> Utility functions for web handling. </summary>
     public static class Web
     {
 	    /// <summary>

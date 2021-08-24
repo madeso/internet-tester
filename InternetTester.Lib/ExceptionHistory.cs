@@ -1,10 +1,9 @@
-﻿namespace InternetTester
+﻿using System;
+using Newtonsoft.Json;
+
+namespace InternetTester.Lib
 {
-    using System;
-
-    using Newtonsoft.Json;
-
-    internal class ExceptionHistory
+	public class ExceptionHistory
     {
         [JsonProperty(PropertyName = "ended")]
         public DateTime Ended { get; set; }

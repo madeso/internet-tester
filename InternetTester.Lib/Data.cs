@@ -1,13 +1,12 @@
-﻿namespace InternetTester
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using Newtonsoft.Json;
+
+namespace InternetTester.Lib
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-
-    using Newtonsoft.Json;
-
-    public class Data
+	public class Data
     {
         [JsonProperty(PropertyName = "exception")]
         public string Exception;
@@ -45,10 +44,10 @@
         {
             get
             {
-	            if (!this._hasException) return null;
+	            if (!_hasException) return null;
 
 	            var now = DateTime.Now;
-                var dt = now.Subtract(this._exceptionDate);
+                var dt = now.Subtract(_exceptionDate);
                 return dt;
             }
         }
@@ -66,47 +65,68 @@
 
         public string ToExceptionString()
         {
-            return string.Join("\r\n", this._history.Select(x => x.ToString()));
+            return string.Join("\r\n", _history.Select(x => x.ToString()));
         }
 
         public void UpdateStatistics(Exception x)
         {
             var now = DateTime.Now;
-            if (this._hasException)
+            if (_hasException)
             {
                 if (x == null)
                 {
                     var ended = now;
 
-                    var dt = now.Subtract(this._exceptionDate);
+                    var dt = now.Subtract(_exceptionDate);
                     if (dt.TotalSeconds > 3)
                     {
-                        if (this._lastTime.HasValue) { 
-                            ended = this._lastTime.Value;
+                        if (_lastTime.HasValue) { 
+                            ended = _lastTime.Value;
                         }
                     }
 
-                    var h = new ExceptionHistory { Exception = this._lastException, Started = this._exceptionDate, Ended = ended };
+                    var h = new ExceptionHistory { Exception = _lastException, Started = _exceptionDate, Ended = ended };
                     if (h.Span.TotalSeconds >= 2) { 
-                        this._history.Add(h);
+                        _history.Add(h);
                     }
-                    this._hasException = false;
-                    this._lastTime = null;
+                    _hasException = false;
+                    _lastTime = null;
                 }
                 else
                 {
-                    this._lastTime = now;
+                    _lastTime = now;
                 }
             }
             else
             {
                 if (x != null)
                 {
-                    this._hasException = true;
-                    this._lastException = x.Message;
-                    this._exceptionDate = now;
+                    _hasException = true;
+                    _lastException = x.Message;
+                    _exceptionDate = now;
                 }
             }
+        }
+
+        public static Data CreateData()
+        {
+	        return Restore() ?? new Data();
+        }
+
+        public void Update(string userMessage, Exception exception)
+        {
+	        Time = DateTime.Now;
+	        Output = Html.GetTitle(userMessage) ?? userMessage;
+	        Exception = exception != null ? exception.Message : null;
+
+	        if (Exception != null)
+	        {
+		        LastErrorTime = DateTime.Now;
+		        LastError = Exception;
+	        }
+
+	        Backup();
+	        UpdateStatistics(exception);
         }
     }
 }
