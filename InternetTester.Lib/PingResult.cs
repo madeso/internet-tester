@@ -2,7 +2,7 @@
 
 namespace InternetTester.Lib
 {
-	public class PingResult
+	public class PingResult : IResult
 	{
 		public string Error { get; set; }
 		public TimeSpan Time { get; set; }
@@ -36,5 +36,7 @@ namespace InternetTester.Lib
 				container.PushDowntime(time, Error);
 			}
 		}
+
+		public bool IsError => Error != null;
 	}
 }

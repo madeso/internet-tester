@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Net;
+using InternetTester.Lib.Annotations;
 
 namespace InternetTester.Lib
 {
-	public class WebResult
+	public class WebResult : IResult
 	{
 		public WebException Error { get; set; }
 		public string Message { get; set; }
@@ -38,5 +39,7 @@ namespace InternetTester.Lib
 				container.PushDowntime(time, Error.Message);
 			}
 		}
+
+		public bool IsError => Error != null;
 	}
 }

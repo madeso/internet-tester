@@ -49,6 +49,7 @@
     <Compile Include="Data.cs" />
     <Compile Include="ExceptionHistory.cs" />
     <Compile Include="Html.cs" />
+    <Compile Include="IResult.cs" />
     <Compile Include="Json.cs" />
     <Compile Include="NameAndCount.cs" />
     <Compile Include="Ping.cs" />

@@ -6,7 +6,7 @@ using System.Threading;
 namespace InternetTester.Lib
 {
 
-	public class Worker<TResult> where TResult : class
+	public class Worker<TResult> where TResult : IResult
 	{
 		private readonly BackgroundWorker _worker;
 		private readonly Action<TResult> _onResult;
@@ -31,8 +31,8 @@ namespace InternetTester.Lib
 				var x = thread();
 				worker.ReportProgress(0, x);
 				var sleepTime = r.Next(Sec, Sec * 10);
-				Debug.WriteLine("{0}: {1}", name, sleepTime);
-				Thread.Sleep(x != null ? Sec : sleepTime);
+				// Debug.WriteLine("{0}: {1}", name, sleepTime);
+				Thread.Sleep(x.IsError ? Sec : sleepTime);
 			}
 		}
 
