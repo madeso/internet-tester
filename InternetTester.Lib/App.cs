@@ -10,12 +10,12 @@ namespace InternetTester.Lib
 		{
 			var webWorker = new Worker<WebResult>
 			(
-				WebResult.RunTest, r => r.Report(Data.Web)
+				"web", WebResult.RunTest, r => r.Report(Data.Web)
 			);
 
 			var pingWorker = new Worker<PingResult>
 			(
-				PingResult.RunTest, r => r.Report(Data.Ping)
+				"ping", PingResult.RunTest, r => r.Report(Data.Ping)
 			);
 		}
 
