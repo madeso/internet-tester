@@ -6,12 +6,7 @@ namespace InternetTester.Lib
 {
 	public class App
 	{
-        readonly Data _data = Data.CreateData();
-
-        private readonly BackgroundWorker _worker;
-
-        // hasInternet, message, shortMessage, error
-        public Action<bool, string, string, string> DisplayCallback { get; set; }
+		private readonly BackgroundWorker _worker;
 
         public App()
         {
@@ -25,7 +20,7 @@ namespace InternetTester.Lib
         {
             const string Url = "https://www.google.se";
 
-            var r = Web.FetchStringAdvanced(Url);
+            var r = Lib.Web.FetchStringAdvanced(Url);
             res = r.Text;
             return r.Error ?? null;
         }
@@ -43,31 +38,24 @@ namespace InternetTester.Lib
             }
         }
 
-        private void DisplayData()
-        {
-            var message = this._data.Exception ?? this._data.Output;
-            var down = this._data.TotalDowntime;
-            var downstr = down.HasValue ? string.Format("Downtime: {0}", down.Value) : string.Empty;
-            var m = string.Format("Last date: {0}\r\n{1}\r\n{2}", this._data.Time.ToLongTimeString(), message, downstr);
-            var sm = string.Format("Last date: {0}\r\n{1}", this._data.Time.ToLongTimeString(), downstr);
-            
-
-            var hasInternet = this._data.Exception == null;
-
-            if (this.DisplayCallback != null)
-            {
-	            DisplayCallback(hasInternet, m, sm, this._data.ToExceptionString());
-            }
-        }
+        public Tracked.Container Web { get; } = new Tracked.Container();
 
         private void UpdateData(object userState)
         {
-            var exception = userState as Exception;
             var userMessage = userState as string;
 
-            this._data.Update(userMessage, exception);
+            var time = DateTime.Now;
 
-            this.DisplayData();
+            if (userMessage != null)
+            {
+	            var message = Html.GetTitle(userMessage) ?? userMessage;
+                Web.PushUptime(time, message);
+            }
+            else
+            {
+	            var exception = (Exception) userState;
+                Web.PushDowntime(time, exception.Message);
+            }
         }
     }
 }

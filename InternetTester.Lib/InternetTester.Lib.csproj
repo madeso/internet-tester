@@ -49,12 +49,22 @@
     <Compile Include="ExceptionHistory.cs" />
     <Compile Include="Html.cs" />
     <Compile Include="Json.cs" />
+    <Compile Include="NameAndCount.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CountedStrings.cs" />
+    <Compile Include="Tracked\Downtime.cs" />
+    <Compile Include="Tracked\Item.cs" />
+    <Compile Include="Tracked\Container.cs" />
+    <Compile Include="Tracked\Shutdown.cs" />
+    <Compile Include="Tracked\Type.cs" />
+    <Compile Include="Tracked\Uptime.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="Web.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

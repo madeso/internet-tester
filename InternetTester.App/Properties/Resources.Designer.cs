@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace InternetTester.Properties {
+namespace InternetTester.App.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace InternetTester.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("InternetTester.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("InternetTester.App.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -63,9 +63,9 @@ namespace InternetTester.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Icon error_icon {
+        internal static System.Drawing.Icon StatusError {
             get {
-                object obj = ResourceManager.GetObject("error_icon", resourceCulture);
+                object obj = ResourceManager.GetObject("StatusError", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace InternetTester.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Icon main_icon {
+        internal static System.Drawing.Icon StatusOk {
             get {
-                object obj = ResourceManager.GetObject("main_icon", resourceCulture);
+                object obj = ResourceManager.GetObject("StatusOk", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }

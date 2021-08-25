@@ -2,7 +2,7 @@
 Get statistics on your internet connection
 
 ## todo
-* convert to a wpf app with a unified view of the logs
+* add history saving to wpf app
 * expose settings
 * option to (automatically) remove old logs
 * add ping support
