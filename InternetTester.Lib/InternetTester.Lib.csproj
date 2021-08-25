@@ -61,6 +61,8 @@
     <Compile Include="Tracked\Uptime.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="Web.cs" />
+    <Compile Include="WebResult.cs" />
+    <Compile Include="Worker.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

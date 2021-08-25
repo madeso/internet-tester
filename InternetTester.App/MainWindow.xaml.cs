@@ -25,7 +25,7 @@ namespace InternetTester.App
 			InitializeComponent();
 
 			var app = new InternetTester.Lib.App();
-			this.DataContext = app;
+			this.DataContext = app.Data;
 		}
 	}
 }
