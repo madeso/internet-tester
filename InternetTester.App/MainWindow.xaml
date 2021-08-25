@@ -19,11 +19,18 @@
 
 		<!-- todo(Gustav): how to display DateTime and TimeSpan? -->
 
-	    <DataTemplate x:Key="TemplateForUptime">
-            <StackPanel>
-				<TextBlock Text="Up" />
-				<TextBlock Text="{Binding StartTime}" />
-            </StackPanel>
+		<DataTemplate x:Key="TemplateForUptime">
+			<StackPanel Orientation="Vertical">
+			    <StackPanel Orientation="Horizontal">
+				    <TextBlock Text="Up" Margin="0,0,3,0" />
+				    <TextBlock Text="{Binding StartTime}" Margin="3,0,0,0"/>
+				    <TextBlock Text="-" Margin="3,0,3,0"/>
+				    <TextBlock Text="{Binding EndTime}" Margin="3,0,3,0"/>
+				    <TextBlock Text=" -> " Margin="3,0,3,0"/>
+				    <TextBlock Text="{Binding Duration}" Margin="3,0,3,0"/>
+			    </StackPanel>
+			    <ItemsControl ItemsSource="{Binding Titles.Items}" />
+		    </StackPanel>
 		</DataTemplate>
 
 	    <DataTemplate x:Key="TemplateForDowntime">
