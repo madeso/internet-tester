@@ -64,7 +64,16 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Settings">
+	        <TabItem Header="Ping">
+		        <Grid>
+			        <ListBox
+				        ItemsSource="{Binding Ping.Items}"
+				        ItemTemplateSelector="{StaticResource TrackedSelector}"
+			        />
+		        </Grid>
+	        </TabItem>
+
+			<TabItem Header="Settings">
                 <Grid>
                     <!-- todo(Gustav): need to fix settings -->
                 </Grid>

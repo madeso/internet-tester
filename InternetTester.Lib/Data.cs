@@ -11,6 +11,9 @@ namespace InternetTester.Lib
         [JsonProperty(PropertyName = "web")]
         public Tracked.Container Web { get; } = new Tracked.Container();
 
+        [JsonProperty(PropertyName = "ping")]
+        public Tracked.Container Ping { get; } = new Tracked.Container();
+
         public static string DefaultFilePath => Json.GetPathTo("history.json");
 
         public static Data Restore()

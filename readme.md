@@ -5,7 +5,6 @@ Get statistics on your internet connection
 * add history saving to wpf app
 * expose settings
 * option to (automatically) remove old logs
-* add ping support
 * plot ping times
 * start windows netword diagnostics
 * tray icon with minimize and close to tray functionality
