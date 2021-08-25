@@ -79,5 +79,15 @@ namespace InternetTester.App.Properties {
                 return ((System.Drawing.Icon)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon StatusUnsure {
+            get {
+                object obj = ResourceManager.GetObject("StatusUnsure", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
     }
 }
