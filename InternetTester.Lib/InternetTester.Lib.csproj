@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="AppStatus.cs" />
     <Compile Include="Console.cs" />
     <Compile Include="Data.cs" />
     <Compile Include="ExceptionHistory.cs" />

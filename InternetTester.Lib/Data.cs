@@ -14,6 +14,15 @@ namespace InternetTester.Lib
         [JsonProperty(PropertyName = "ping")]
         public Tracked.Container Ping { get; } = new Tracked.Container();
 
+        public IEnumerable<Tracked.Container> Containers
+        {
+	        get
+	        {
+		        yield return Web;
+		        yield return Ping;
+	        }
+        }
+
         public static string DefaultFilePath => Json.GetPathTo("history.json");
 
         public static Data Restore()

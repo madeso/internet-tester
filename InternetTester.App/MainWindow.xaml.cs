@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using InternetTester.Lib;
 
 namespace InternetTester.App
 {
@@ -24,8 +27,47 @@ namespace InternetTester.App
 		{
 			InitializeComponent();
 
-			var app = new InternetTester.Lib.App();
+			var app = new InternetTester.Lib.App(x => this.UpdateStatus(x));
 			this.DataContext = app.Data;
+		}
+
+		private void UpdateStatus(AppStatus appStatus)
+		{
+			switch (appStatus)
+			{
+				case AppStatus.Up:
+					SetIcon(Properties.Resources.StatusOk, "StatusOk.ico");
+					break;
+				case AppStatus.Down:
+					SetIcon(Properties.Resources.StatusError, "StatusError.ico");
+					break;
+				case AppStatus.Unsure:
+					SetIcon(Properties.Resources.StatusUnsure, "StatusUnsure.ico");
+					break;
+				case AppStatus.Shutdown:
+					// todo(Gustav): update this icon?
+					SetIcon(Properties.Resources.StatusUnsure, "StatusUnsure.ico");
+					break;
+				default:
+					throw new ArgumentOutOfRangeException(nameof(appStatus), appStatus, null);
+			}
+		}
+
+		private void SetIcon(Icon icon, string path)
+		{
+			// todo(Gustav): update the icon
+
+			// Uri iconUri = new Uri("pack://application:,,,/" + path, UriKind.RelativeOrAbsolute);
+			// this.Icon = BitmapFrame.Create(iconUri);
+
+			// var ibd = new IconBitmapDecoder(
+			// 	new Uri(@"pack://application:,,,/Resources/" + path, UriKind.RelativeOrAbsolute),
+			// 	BitmapCreateOptions.None,
+			// 	BitmapCacheOption.Default);
+			// Icon = ibd.Frames[0];
+
+			// var stream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("Resources/" + path);
+			// this.Icon = BitmapFrame.Create(stream);
 		}
 	}
 }

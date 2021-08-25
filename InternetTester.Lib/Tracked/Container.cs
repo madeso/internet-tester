@@ -12,6 +12,8 @@ namespace InternetTester.Lib.Tracked
 		[JsonProperty(PropertyName = "items")]
 		public ObservableCollection<Item> Items { get; } = new ObservableCollection<Item>();
 
+		public Item Latest => Items.Count == 0 ? null : Items[0];
+
 		private Item AddNewItem(Type type, DateTime time)
 		{
 			var r = CreateItem(type, time);
