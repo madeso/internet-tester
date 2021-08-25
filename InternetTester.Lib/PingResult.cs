@@ -29,8 +29,7 @@ namespace InternetTester.Lib
 
 			if (string.IsNullOrEmpty(Error))
 			{
-				var message = "ok";
-				container.PushUptime(time, message);
+				container.PushUptime(time, Time);
 			}
 			else
 			{

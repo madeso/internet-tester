@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InternetTester.App"
         xmlns:lib="clr-namespace:InternetTester.Lib;assembly=InternetTester.Lib"
+        xmlns:tracked="clr-namespace:InternetTester.Lib.Tracked;assembly=InternetTester.Lib"
         mc:Ignorable="d"
         Title="Internet Tester" Height="450" Width="800">
     <Window.Resources>
@@ -22,21 +23,22 @@
 		<DataTemplate x:Key="TemplateForUptime">
 			<StackPanel Orientation="Vertical">
 			    <StackPanel Orientation="Horizontal">
-				    <TextBlock Text="Up" Margin="0,0,3,0" />
+					<TextBlock Text="Up" Margin="0,0,3,0" FontWeight="DemiBold" />
 				    <TextBlock Text="{Binding StartTime}" Margin="3,0,0,0"/>
 				    <TextBlock Text="-" Margin="3,0,3,0"/>
 				    <TextBlock Text="{Binding EndTime}" Margin="3,0,3,0"/>
 				    <TextBlock Text=" -> " Margin="3,0,3,0"/>
 				    <TextBlock Text="{Binding Duration}" Margin="3,0,3,0"/>
 			    </StackPanel>
-			    <ItemsControl ItemsSource="{Binding Titles.Items}" />
+				<ItemsControl ItemsSource="{Binding Titles.Items}" />
+				<ContentControl Content="{Binding Times.Statistics}"/>
 		    </StackPanel>
 		</DataTemplate>
 
 	    <DataTemplate x:Key="TemplateForDowntime">
 		    <StackPanel Orientation="Vertical">
 				<StackPanel Orientation="Horizontal">
-					<TextBlock Text="Down" Margin="0,0,3,0" />
+					<TextBlock Text="Down" Margin="0,0,3,0" FontWeight="DemiBold" />
 				    <TextBlock Text="{Binding StartTime}" Margin="3,0,0,0"/>
 					<TextBlock Text="-" Margin="3,0,3,0"/>
 					<TextBlock Text="{Binding EndTime}" Margin="3,0,3,0"/>
@@ -52,6 +54,31 @@
 			    <TextBlock Text="Offline" />
 			    <TextBlock Text="{Binding StartTime}" />
 		    </StackPanel>
+		</DataTemplate>
+
+		<DataTemplate DataType="{x:Type tracked:SpanStatistics}">
+			<StackPanel Orientation="Vertical">
+				<StackPanel Orientation="Horizontal">
+					<TextBlock Text="Count:" Margin="0,0,6,0" FontStyle="Italic" />
+					<TextBlock Text="{Binding Count}" />
+				</StackPanel>
+
+				<StackPanel Orientation="Horizontal">
+				    <TextBlock Text="Min:" Margin="0,0,6,0" FontStyle="Italic" />
+					<TextBlock Text="{Binding MinMs}" />
+				    <TextBlock Text="ms" Margin="3,0,0,0"/>
+				</StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<TextBlock Text="Max:" Margin="0,0,6,0" FontStyle="Italic" />
+					<TextBlock Text="{Binding MaxMs}" />
+					<TextBlock Text="ms" Margin="3,0,0,0"/>
+				</StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<TextBlock Text="Avg:" Margin="0,0,6,0" FontStyle="Italic" />
+					<TextBlock Text="{Binding AvgMs}" />
+					<TextBlock Text="ms" Margin="3,0,0,0"/>
+				</StackPanel>
+			</StackPanel>
 		</DataTemplate>
 
         <local:TrackedDataTemplateSelector x:Key="TrackedSelector"
