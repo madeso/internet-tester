@@ -1,6 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Threading;
 using Type = InternetTester.Lib.Tracked.Type;
 
 namespace InternetTester.Lib
@@ -16,7 +14,7 @@ namespace InternetTester.Lib
 				"web", WebResult.RunTest, r =>
 				{
 					r.Report(Data.Web);
-					this.UpdateStatus();
+					this.DataHasChanged();
 				});
 
 			var pingWorker = new Worker<PingResult>
@@ -24,12 +22,13 @@ namespace InternetTester.Lib
 				"ping", PingResult.RunTest, r =>
 				{
 					r.Report(Data.Ping);
-					this.UpdateStatus();
+					this.DataHasChanged();
 				});
 		}
 
-		private void UpdateStatus()
+		private void DataHasChanged()
 		{
+			Data.Backup();
 			OnStatus(CalculateStatus());
 		}
 
@@ -72,6 +71,6 @@ namespace InternetTester.Lib
 
 		public Action<AppStatus> OnStatus { get; set; }
 
-		public Data Data { get; } = new Data();
-    }
+		public Data Data { get; } = Data.CreateData();
+	}
 }

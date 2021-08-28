@@ -3,11 +3,17 @@ using System.ComponentModel;
 using System.Data.SqlTypes;
 using System.Runtime.CompilerServices;
 using InternetTester.Lib.Annotations;
+using JsonSubTypes;
 using Newtonsoft.Json;
 
 namespace InternetTester.Lib.Tracked
 {
-	// [JsonConverter(typeof(JsonSubtypes), "type")]
+	[JsonConverter(typeof(JsonSubtypes), "type")]
+	[JsonSubtypes.KnownSubType(typeof(Uptime), TypeJson.Uptime)]
+	[JsonSubtypes.KnownSubType(typeof(Downtime), TypeJson.Downtime)]
+	[JsonSubtypes.KnownSubType(typeof(Shutdown), TypeJson.Shutdown)]
+
+	// [JsonObject(MemberSerialization.OptIn)]
 	public abstract class Item : INotifyPropertyChanged
 	{
 		[JsonProperty(PropertyName = "end_time")]
@@ -22,8 +28,10 @@ namespace InternetTester.Lib.Tracked
 			this.EndTime = t;
 		}
 
+		[JsonProperty(PropertyName = "type")]
 		public abstract Type Type { get; }
 
+		[JsonIgnore]
 		public DateTime StartTime
 		{
 			get => _startTime;
@@ -36,6 +44,7 @@ namespace InternetTester.Lib.Tracked
 			}
 		}
 
+		[JsonIgnore]
 		public DateTime EndTime
 		{
 			get => _endTime;
@@ -48,6 +57,7 @@ namespace InternetTester.Lib.Tracked
 			}
 		}
 
+		[JsonIgnore]
 		public TimeSpan Duration => EndTime.Subtract(StartTime);
 
 		public event PropertyChangedEventHandler PropertyChanged;

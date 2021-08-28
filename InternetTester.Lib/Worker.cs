@@ -25,14 +25,14 @@ namespace InternetTester.Lib
 			BackgroundWorker worker)
 		{
 			var r = new Random();
-			const int Sec = 1000;
+			const int sec = 1000;
 			while (worker.CancellationPending == false)
 			{
 				var x = thread();
 				worker.ReportProgress(0, x);
-				var sleepTime = r.Next(Sec, Sec * 10);
+				var sleepTime = r.Next(sec, sec * 10);
 				// Debug.WriteLine("{0}: {1}", name, sleepTime);
-				Thread.Sleep(x.IsError ? Sec : sleepTime);
+				Thread.Sleep(x.IsError ? sec : sleepTime);
 			}
 		}
 

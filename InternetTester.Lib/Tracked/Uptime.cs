@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 
 namespace InternetTester.Lib.Tracked
 {
+	// [JsonObject(MemberSerialization.OptIn)]
 	public class Uptime : Item
 	{
 		[JsonProperty(PropertyName = "titles")]

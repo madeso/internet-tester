@@ -4,12 +4,13 @@ using Newtonsoft.Json;
 
 namespace InternetTester.Lib
 {
+	[JsonObject(MemberSerialization.OptIn)]
 	public class CountedStrings
 	{
 		private Dictionary<string, NameAndCount> _data;
 
 		[JsonProperty(PropertyName = "items")]
-		public ObservableCollection<NameAndCount> Items { get; } = new ObservableCollection<NameAndCount>();
+		public ObservableCollection<NameAndCount> Items { get; set; } = new ObservableCollection<NameAndCount>();
 
 		public void Add(string s)
 		{

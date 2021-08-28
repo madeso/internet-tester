@@ -11,9 +11,9 @@ namespace InternetTester.Lib
 
 		public static WebResult RunTest()
 		{
-			const string Url = "https://www.google.se";
+			const string url = "https://www.google.se";
 
-			var r = Lib.Web.FetchStringAdvanced(Url);
+			var r = Lib.Web.FetchStringAdvanced(url);
 
 			if (r.Error != null)
 			{

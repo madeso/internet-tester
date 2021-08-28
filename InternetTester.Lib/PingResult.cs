@@ -9,9 +9,9 @@ namespace InternetTester.Lib
 
 		public static PingResult RunTest()
 		{
-			const string Ip = "8.8.8.8";
+			const string ip = "8.8.8.8";
 
-			var r = Ping.Run(Ip);
+			var r = Ping.Run(ip);
 
 			if (r.Error != null)
 			{

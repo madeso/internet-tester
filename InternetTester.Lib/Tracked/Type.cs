@@ -1,7 +1,19 @@
-﻿namespace InternetTester.Lib.Tracked
+﻿using System.Runtime.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
+namespace InternetTester.Lib.Tracked
 {
+	[JsonConverter(typeof(StringEnumConverter))]
 	public enum Type
 	{
-		Downtime, Uptime, Shutdown
+		[EnumMember(Value=TypeJson.Downtime)]
+		Downtime,
+
+		[EnumMember(Value = TypeJson.Uptime)]
+		Uptime,
+
+		[EnumMember(Value = TypeJson.Shutdown)]
+		Shutdown
 	}
 }

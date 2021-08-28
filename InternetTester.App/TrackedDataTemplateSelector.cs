@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-
-using InternetTester.Lib;
 using Type = InternetTester.Lib.Tracked.Type;
 
 namespace InternetTester.App

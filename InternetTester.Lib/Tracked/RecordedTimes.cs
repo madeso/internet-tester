@@ -4,13 +4,28 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using InternetTester.Lib.Annotations;
+using Newtonsoft.Json;
 
 namespace InternetTester.Lib.Tracked
 {
+	[JsonObject(MemberSerialization.OptIn)]
 	public class RecordedTimes: INotifyPropertyChanged
 	{
 		private SpanStatistics _statistics;
-		public ObservableCollection<TimeEntry> Times { get; } = new ObservableCollection<TimeEntry>();
+		private ObservableCollection<TimeEntry> _times = new ObservableCollection<TimeEntry>();
+
+		[JsonProperty(PropertyName = "times")]
+		public ObservableCollection<TimeEntry> Times
+		{
+			get => _times;
+			set
+			{
+				if (Equals(value, _times)) return;
+				_times = value;
+				OnPropertyChanged();
+				UpdateStatistics();
+			}
+		}
 
 		public SpanStatistics Statistics
 		{

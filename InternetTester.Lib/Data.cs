@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Newtonsoft.Json;
 
 namespace InternetTester.Lib
 {
-	public class Data
+	[JsonObject(MemberSerialization.OptIn)]
+    public class Data
     {
         [JsonProperty(PropertyName = "web")]
         public Tracked.Container Web { get; } = new Tracked.Container();
@@ -38,7 +37,8 @@ namespace InternetTester.Lib
 
         public static Data CreateData()
         {
-	        return Restore() ?? new Data();
+	        var d = Restore() ?? new Data();
+	        return d;
         }
     }
 }
