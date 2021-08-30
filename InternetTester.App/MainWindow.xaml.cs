@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -18,6 +20,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using InternetTester.Lib;
 
+using Microsoft.Win32;
+
 namespace InternetTester.App
 {
 	/// <summary>
@@ -25,14 +29,37 @@ namespace InternetTester.App
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		private Lib.App _app;
+
 		public MainWindow()
 		{
 			InitializeComponent();
 
-			var app = new InternetTester.Lib.App(this.UpdateStatus);
-			this.DataContext = app.Data;
+			_app = new InternetTester.Lib.App(this.UpdateStatus);
+			this.DataContext = _app.Data;
 
 			this.Language = XmlLanguage.GetLanguage(Thread.CurrentThread.CurrentCulture.Name);
+			
+			SystemEvents.PowerModeChanged += PowerModeChanged;
+
+			this.Closing += (sender, args) => this.OnShutdown();
+		}
+
+		private void PowerModeChanged(object sender, PowerModeChangedEventArgs e)
+		{
+			Debug.WriteLine("------------------ Power mode changed to {0}", e.Mode);
+			if (e.Mode == PowerModes.Suspend)
+			{
+				OnShutdown();
+			}
+		}
+
+		private void OnShutdown()
+		{
+			foreach (var c in _app.Data.Containers)
+			{
+				c.PushShutdown(DateTime.Now);
+			}
 		}
 
 		private void UpdateStatus(AppStatus appStatus)

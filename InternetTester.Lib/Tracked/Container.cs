@@ -72,5 +72,10 @@ namespace InternetTester.Lib.Tracked
 			var item = (Uptime)PushTime(Type.Uptime, time);
 			item.Times.Add(time, span);
 		}
+
+		public void PushShutdown(DateTime time)
+		{
+			PushTime(Type.Shutdown, time);
+		}
 	}
 }
