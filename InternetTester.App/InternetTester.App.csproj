@@ -112,5 +112,11 @@
   <ItemGroup>
     <None Include="Resources\StatusUnsure.ico" />
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Res\StatusError.ico" />
+    <Resource Include="Res\StatusOk.ico" />
+    <Resource Include="Res\StatusUnsure.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

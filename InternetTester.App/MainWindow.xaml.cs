@@ -61,8 +61,8 @@ namespace InternetTester.App
 		{
 			// todo(Gustav): update the icon
 
-			// Uri iconUri = new Uri("pack://application:,,,/" + path, UriKind.RelativeOrAbsolute);
-			// this.Icon = BitmapFrame.Create(iconUri);
+			Uri iconUri = new Uri("pack://application:,,,/Res/" + path, UriKind.RelativeOrAbsolute);
+			this.Icon = BitmapFrame.Create(iconUri);
 
 			// var ibd = new IconBitmapDecoder(
 			// 	new Uri(@"pack://application:,,,/Resources/" + path, UriKind.RelativeOrAbsolute),
