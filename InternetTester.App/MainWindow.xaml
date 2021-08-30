@@ -39,28 +39,37 @@
 			</StackPanel>
 		</DataTemplate>
 
-	    <DataTemplate x:Key="TemplateForDowntime">
-		    <StackPanel Orientation="Horizontal">
+		<DataTemplate x:Key="TemplateForDowntime">
+			<StackPanel Orientation="Horizontal">
 				<Image Source="Res/StatusError.ico" MaxWidth="16" Margin="3" HorizontalAlignment="Center"  VerticalAlignment="Top" />
-			    <StackPanel Orientation="Vertical">
+				<StackPanel Orientation="Vertical">
 					<StackPanel Orientation="Horizontal">
 						<TextBlock Text="Down" Margin="0,0,3,0" FontWeight="DemiBold" />
-					    <TextBlock Text="{Binding StartTime}" Margin="3,0,0,0"/>
+						<TextBlock Text="{Binding StartTime}" Margin="3,0,0,0"/>
 						<TextBlock Text="-" Margin="3,0,3,0"/>
 						<TextBlock Text="{Binding EndTime}" Margin="3,0,3,0"/>
 						<TextBlock Text=" -> " Margin="3,0,3,0"/>
 						<TextBlock Text="{Binding Duration}" Margin="3,0,3,0"/>
 					</StackPanel>
 					<ItemsControl ItemsSource="{Binding Errors.Items}" />
-	            </StackPanel>
-            </StackPanel>
+				</StackPanel>
+			</StackPanel>
 		</DataTemplate>
 
-	    <DataTemplate x:Key="TemplateForShutdown">
-		    <StackPanel>
-			    <TextBlock Text="Offline" />
-			    <TextBlock Text="{Binding StartTime}" />
-		    </StackPanel>
+		<DataTemplate x:Key="TemplateForShutdown">
+			<StackPanel Orientation="Horizontal">
+				<Image Source="Res/StatusUnsure.ico" MaxWidth="16" Margin="3" HorizontalAlignment="Center"  VerticalAlignment="Top" />
+				<StackPanel Orientation="Vertical">
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="Offline" Margin="0,0,3,0" FontWeight="DemiBold" />
+						<TextBlock Text="{Binding StartTime}" Margin="3,0,0,0"/>
+						<TextBlock Text="-" Margin="3,0,3,0"/>
+						<TextBlock Text="{Binding EndTime}" Margin="3,0,3,0"/>
+						<TextBlock Text=" -> " Margin="3,0,3,0"/>
+						<TextBlock Text="{Binding Duration}" Margin="3,0,3,0"/>
+					</StackPanel>
+				</StackPanel>
+			</StackPanel>
 		</DataTemplate>
 
 		<DataTemplate DataType="{x:Type tracked:SpanStatistics}">
