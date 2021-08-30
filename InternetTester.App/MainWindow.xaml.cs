@@ -48,9 +48,26 @@ namespace InternetTester.App
 		private void PowerModeChanged(object sender, PowerModeChangedEventArgs e)
 		{
 			Debug.WriteLine("------------------ Power mode changed to {0}", e.Mode);
-			if (e.Mode == PowerModes.Suspend)
+			switch (e.Mode)
 			{
-				OnShutdown();
+				case PowerModes.Resume:
+					SetState(true);
+					break;
+				case PowerModes.StatusChange:
+					break;
+				case PowerModes.Suspend:
+					SetState(false);
+					break;
+				default:
+					throw new ArgumentOutOfRangeException();
+			}
+		}
+
+		private void SetState(bool state)
+		{
+			foreach (var c in _app.Data.Containers)
+			{
+				c.SetState(state);
 			}
 		}
 

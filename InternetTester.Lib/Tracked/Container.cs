@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using InternetTester.Lib.Annotations;
 using Newtonsoft.Json;
 
 namespace InternetTester.Lib.Tracked
@@ -14,6 +15,9 @@ namespace InternetTester.Lib.Tracked
 
 		public Item Latest => Items.Count == 0 ? null : Items[0];
 
+		[JsonProperty(PropertyName = "receive_messages")]
+		private bool _receiveMessages = true;
+
 		private Item AddNewItem(Type type, DateTime time)
 		{
 			var r = CreateItem(type, time);
@@ -21,8 +25,13 @@ namespace InternetTester.Lib.Tracked
 			return r;
 		}
 
+		[CanBeNull]
 		private Item PushTime(Type type, DateTime time)
 		{
+			if (_receiveMessages == false)
+			{
+				return null;
+			}
 			if (Items.Count == 0)
 			{
 				return AddNewItem(type, time);
@@ -58,24 +67,32 @@ namespace InternetTester.Lib.Tracked
 		public void PushDowntime(DateTime time, string error)
 		{
 			var item = (Downtime) PushTime(Type.Downtime, time);
-			item.Errors.Add(error);
+			item?.Errors.Add(error);
 		}
 
 		public void PushUptime(DateTime time, string title)
 		{
 			var item = (Uptime) PushTime(Type.Uptime, time);
-			item.Titles.Add(title);
+			item?.Titles.Add(title);
 		}
 
 		public void PushUptime(DateTime time, TimeSpan span)
 		{
 			var item = (Uptime)PushTime(Type.Uptime, time);
-			item.Times.Add(time, span);
+			item?.Times.Add(time, span);
 		}
 
 		public void PushShutdown(DateTime time)
 		{
 			PushTime(Type.Shutdown, time);
+		}
+
+		public void SetState(bool newState)
+		{
+			var dt = DateTime.Now;
+			PushShutdown(dt);
+			_receiveMessages = newState;
+			PushShutdown(dt);
 		}
 	}
 }
