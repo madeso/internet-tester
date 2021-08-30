@@ -29,9 +29,14 @@ namespace InternetTester.Lib.Tracked
 			}
 
 			var first = Items.First();
+
+			// update the timing of the latest, regardless if it matches or not...
+			// if it matched we have to update the current
+			// if it doesn't the last item lasted up until this new measurement (and we need to update it... and then add a new)
+			first.EndTime = time;
+
 			if (first.Type == type)
 			{
-				first.EndTime = time;
 				return first;
 			}
 
