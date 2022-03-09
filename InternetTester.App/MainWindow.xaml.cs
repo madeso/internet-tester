@@ -32,6 +32,8 @@ namespace InternetTester.App
 			SystemEvents.PowerModeChanged += PowerModeChanged;
 
 			this.Closing += (sender, args) => this.OnShutdown();
+
+			this.SetState(true);
 		}
 
 		private void PowerModeChanged(object sender, PowerModeChangedEventArgs e)
